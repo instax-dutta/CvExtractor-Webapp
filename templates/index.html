@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CV Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .file-input {
+            margin-bottom: 20px;
+        }
+        .file-input input[type="file"] {
+            display: none;
+        }
+        .file-input label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CV Extractor <br> Made By Sai Dutta Abhishek Dash</h1>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" action="{{ url_for('extract') }}">
+            <div class="file-input">
+                <input type="file" name="files" multiple id="file-input" onchange="updateFileCount()">
+                <label for="file-input">Choose Files</label>
+                <span id="file-count"></span>
+            </div>
+            <input type="submit" value="Extract" class="submit-btn">
+        </form>
+    </div>
+    <script>
+        function updateFileCount() {
+            const fileInput = document.getElementById('file-input');
+            const fileCount = document.getElementById('file-count');
+            const numFiles = fileInput.files.length;
+            fileCount.textContent = `(${numFiles} file(s) selected)`;
+        }
+    </script>
+</body>
+</html>
