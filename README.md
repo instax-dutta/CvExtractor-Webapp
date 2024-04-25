@@ -23,13 +23,13 @@ These instructions will help you set up the project on your local machine for de
 1. Clone the repository:
 
 ```
-git clone https://github.com/username/cv-extractor.git
+git clone https://github.com/instax-dutta/CvExtractor-Webapp.git
 ```
 
 2. Navigate to the project directory:
 
 ```
-cd cv-extractor
+cd CvExtractor-Webapp
 ```
 
 3. Create and activate a virtual environment (optional but recommended):
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 1. Start the Flask development server:
 
 ```
-python app.py
+python main.py
 ```
 
 2. Open your web browser and visit `http://localhost:5000` to access the CV Extractor application.
