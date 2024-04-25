@@ -21,15 +21,15 @@ def extract():
     workbook = openpyxl.Workbook()
     worksheet = workbook.active
     worksheet.title = 'CV Data'
-    worksheet.append(['Email', 'Phone', 'Text'])
+    worksheet.append(['Name', 'Email', 'Phone'])
 
     for file in files:
         filename = file.filename
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
 
-        text, email, phone = extract_data(file_path)
-        worksheet.append([email, phone, text])
+        name, email, phone = extract_data(file_path)
+        worksheet.append([name, email, phone])
 
         os.remove(file_path)
 
@@ -40,6 +40,7 @@ def extract():
 
 def extract_data(file_path):
     text = ''
+    name = ''
     email = ''
     phone = ''
 
@@ -54,17 +55,25 @@ def extract_data(file_path):
         for para in doc.paragraphs:
             text += para.text + '\n'
 
-    email = re.search(r'[\w\.-]+@[\w\.-]+', text)
-    phone = re.search(r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b', text)
+    # Extract name
+    name_pattern = r'\b[A-Z][a-z]+\s+[A-Z][a-z]+\b'
+    name_match = re.search(name_pattern, text)
+    if name_match:
+        name = name_match.group()
 
+    # Extract email
+    email = re.search(r'[\w\.-]+@[\w\.-]+', text)
     if email:
         email = email.group()
+
+    # Extract phone number
+    phone = re.search(r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b', text)
     if phone:
         phone = phone.group()
 
-    return text, email, phone
+    return name, email, phone
 
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(port = 5000 , debug=True)
+    app.run(port=5000, debug=True)
