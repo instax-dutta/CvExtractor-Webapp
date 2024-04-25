@@ -76,4 +76,4 @@ def extract_data(file_path):
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(port=5000, debug=True)
+    app.run(port=8080, debug=True)
