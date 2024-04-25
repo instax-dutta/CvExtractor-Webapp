@@ -1,5 +1,3 @@
-Here's the README in Markdown format:
-
 # CV Extractor
 
 CV Extractor is a web application that allows you to extract crucial information from a collection of resumes or CVs in various file formats (PDF, DOCX). The application can identify and extract email addresses, contact numbers, and the overall text content from the uploaded files, and compile the extracted data into a structured Excel file for easy viewing and analysis.
