@@ -1,5 +1,14 @@
-flask
-python-docx
-PyPDF2
-openpyxl
-gunicorn
+# Web framework
+flask>=3.0,<4.0
+
+# PDF processing
+pypdf>=4.0,<6.0
+
+# DOCX processing
+python-docx>=1.1,<2.0
+
+# Excel generation
+openpyxl>=3.1,<4.0
+
+# Production server
+gunicorn>=22.0,<24.0
