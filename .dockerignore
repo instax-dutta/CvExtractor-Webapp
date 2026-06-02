@@ -1,0 +1,13 @@
+.git
+.planning
+__pycache__
+.pytest_cache
+.coverage
+uploads
+.env
+.flaskenv
+.DS_Store
+*.pyc
+node_modules
+.venv
+venv

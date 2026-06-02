@@ -1,0 +1,28 @@
+# Secrets
+.env
+.flaskenv
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Uploads generated at runtime
+uploads/
+
+# macOS
+.DS_Store
+
+# Packaging
+*.egg-info/
+dist/
+build/
+
+# Project planning (GSD)
+.planning/
+
+# Virtual environments
+.venv/
+venv/
