@@ -1,18 +1,14 @@
 services:
   web:
     build: .
+    image: ghcr.io/instax-dutta/cv-extractor-webapp:latest
     ports:
       - "8000:8000"
     volumes:
       - uploads:/app/uploads
     env_file:
       - .env
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
+    restart: unless-stopped
 
 volumes:
   uploads:

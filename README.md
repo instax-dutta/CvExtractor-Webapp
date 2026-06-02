@@ -1,6 +1,8 @@
 # CV Extractor
 
 [![CI](https://github.com/instax-dutta/CvExtractor-Webapp/actions/workflows/ci.yml/badge.svg)](https://github.com/instax-dutta/CvExtractor-Webapp/actions/workflows/ci.yml)
+[![Deploy](https://github.com/instax-dutta/CvExtractor-Webapp/actions/workflows/deploy.yml/badge.svg)](https://github.com/instax-dutta/CvExtractor-Webapp/actions/workflows/deploy.yml)
+[![GitHub Package](https://img.shields.io/badge/GHCR-cv--extractor-blue?logo=github)](https://github.com/instax-dutta/CvExtractor-Webapp/pkgs/container/cv-extractor-webapp)
 ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
 
 Upload PDF and DOCX resumes, extract name/email/phone from each, and download a structured Excel workbook.
@@ -25,7 +27,7 @@ Upload PDF and DOCX resumes, extract name/email/phone from each, and download a 
 | Excel      | openpyxl                                  |
 | Security   | Flask-WTF (CSRF protection)               |
 | Frontend   | Vanilla HTML/CSS/JS (no framework)        |
-| CI/CD      | GitHub Actions (ruff + pytest + Docker)   |
+| CI/CD      | GitHub Actions (ruff + pytest + Docker → GHCR) |
 
 ## Prerequisites
 
@@ -89,9 +91,11 @@ Environment variables (`.env` file):
 ├── run.py                 # Dev server entry point
 ├── wsgi.py                # Production entry point
 ├── pyproject.toml         # Build config + ruff + pytest
-├── Dockerfile             # Multi-stage Docker build
-├── docker-compose.yml     # Single-service compose
-└── .github/workflows/ci.yml
+├── Dockerfile             # Multi-stage Docker build (OCI labels, healthcheck)
+├── docker-compose.yml     # Single-service compose (supports GHCR image)
+└── .github/workflows/
+    ├── ci.yml             # Lint + test + build on PR/push
+    └── deploy.yml         # Push Docker image to GHCR on main/tags
 ```
 
 ## Development
@@ -136,12 +140,30 @@ Returns `400` with error message on empty upload or extraction failure.
 
 ## Deployment
 
+### Pre-built Image (GHCR)
+
+Every push to `main` publishes a Docker image to the GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/instax-dutta/cv-extractor-webapp:latest
+docker run -p 8000:8000 ghcr.io/instax-dutta/cv-extractor-webapp:latest
+```
+
+Or with docker-compose (pulls the published image automatically):
+
+```bash
+cp .env.example .env
+docker compose up
+```
+
+### Build Locally
+
 ```bash
 docker build -t cv-extractor .
 docker run -p 8000:8000 cv-extractor
 ```
 
-The Docker image uses gunicorn with a multi-stage build for a slim production image.
+The Docker image uses gunicorn with a multi-stage build for a slim production image, and includes a built-in health check.
 
 ## License
 
